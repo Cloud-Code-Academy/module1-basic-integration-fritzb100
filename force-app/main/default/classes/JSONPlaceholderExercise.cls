@@ -8,13 +8,25 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String getPostById(Integer postId) {
-        // TODO: Student Implementation
+        String response;
         // 1. Create a new HTTP request
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
         // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
+        req.setEndpoint(BASE_URL + '/posts/' + postId);
         // 3. Set the HTTP method to 'GET'
+        req.setMethod('GET');
         // 4. Send the request and get the response
+        HttpResponse res = http.send(req);
         // 5. Return the response body as string
-        return null;
+        if(res.getStatusCode() >= 200 && res.getStatusCode() <300) {
+            response = res.getBody();
+        }
+        else{
+            response = 'Status code: ' + res.getStatusCode() + 'Status: ' + res.getStatus();
+        }
+        System.debug(response);
+        return response;
     }
     
     /**
@@ -28,13 +40,20 @@ public class JSONPlaceholderExercise {
     public static String createPost(String title, String body, Integer userId) {
         // TODO: Student Implementation
         // 1. Create a new HTTP request
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
         // 2. Set the endpoint URL using BASE_URL + '/posts'
+        req.setEndpoint(BASE_URL + '/posts');
         // 3. Set the HTTP method to 'POST'
+        req.setMethod('POST');
         // 4. Create a JSON string with the post data
+        String postData =  body;
         // 5. Set the request body
+        req.setBody(postData);
         // 6. Send the request and get the response
+        HttpResponse res = Http.send(req);
         // 7. Return the response body as string
-        return null;
+        return res.getBody();
     }
     
     /**

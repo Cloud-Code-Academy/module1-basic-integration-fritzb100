@@ -1,5 +1,5 @@
 public class JSONPlaceholderExercise {
-    private static final String BASE_URL = 'https://jsonplaceholder.typicode.com';
+    private static final String BASE_URL = 'https:    //jsonplaceholder.typicode.com';
     
     /**
      * Exercise 1: Implement a GET request to fetch a post by ID
@@ -9,23 +9,27 @@ public class JSONPlaceholderExercise {
      */
     public static String getPostById(Integer postId) {
         String response;
-        // 1. Create a new HTTP request
+            // 1. Create a new HTTP request
         Http http = new Http();
         HttpRequest req = new HttpRequest();
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
+            // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
         req.setEndpoint(BASE_URL + '/posts/' + postId);
-        // 3. Set the HTTP method to 'GET'
+            // 3. Set the HTTP method to 'GET'
         req.setMethod('GET');
-        // 4. Send the request and get the response
-        HttpResponse res = http.send(req);
-        // 5. Return the response body as string
-        if(res.getStatusCode() >= 200 && res.getStatusCode() <300) {
-            response = res.getBody();
+            // 4. Send the request and get the response
+        try {
+            HttpResponse res = http.send(req);
+                // 5. Return the response body as string
+            if(res.getStatusCode() >= 200 && res.getStatusCode() <300) {
+                response = res.getBody();
+            }
+            else {
+                response = 'Status code: ' + res.getStatusCode() + 'Status: ' + res.getStatus();
+            }
+        } 
+        catch (Exception ex) {
+            response = 'There was an error: ' + ex.getMessage();
         }
-        else{
-            response = 'Status code: ' + res.getStatusCode() + 'Status: ' + res.getStatus();
-        }
-        System.debug(response);
         return response;
     }
     
@@ -65,31 +69,34 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String updatePost(Integer postId, String title, String body, Integer userId) {
-        System.debug('postId: ' + postId); 
-        System.debug('title: ' + title);
-        System.debug('body: ' + body);
-        System.debug('userId: ' + userId);
-
-        // 1. Create a new HTTP request
+        String response;
+            // 1. Create a new HTTP request
         Http http = new Http();
         HttpRequest req = new HttpRequest();
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
+            // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
         req.setEndpoint(BASE_URL + '/posts/' + postId);
-        System.debug(BASE_URL + '/posts/' + postId);
-        // 3. Set the HTTP method to 'PUT'
+            // 3. Set the HTTP method to 'PUT'
         req.setMethod('PUT');
         req.setHeader('Content-Type', 'application/json');
-        // 4. Create a JSON string with the updated post data
+            // 4. Create a JSON string with the updated post data
         String jsonString = '{"id" : 1,"title" : "Updated Post", "body" : "This is an updated post","userId" : 1}';
-        // 5. Set the request body
+            // 5. Set the request body
         req.setBody(jsonString);
-        // 6. Send the request and get the response
-        HttpResponse res = Http.send(req);
-        // 7. Return the response body as string
-        System.debug(res.getStatus());
-        System.debug(res.getStatusCode());
-        System.debug(res.getBody());
-        return req.getBody();
+            // 6. Send the request and get the response
+        try {
+            HttpResponse res = Http.send(req);
+            if(res.getStatusCode() >= 200 && res.getStatusCode() <300) {
+                response = res.getBody();
+            }
+            else {
+                response = 'Status code: ' + res.getStatusCode() + 'Status: ' + res.getStatus();
+            }
+        } 
+        catch (Exception ex) {
+            response = 'There was an error: ' + ex.getMessage();
+        } 
+            // 7. Return the response body as string
+        return response;
     }
     
     /**
@@ -100,25 +107,33 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String patchPostTitle(Integer postId, String title) {
-        // TODO: Student Implementation
-        // 1. Create a new HTTP request
+        String response;
+            // 1. Create a new HTTP request
         Http http = new Http();
         HttpRequest req = new HttpRequest();        
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
+            // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
         req.setEndpoint(BASE_URL + '/posts/' + postId);
-        // 3. Set the HTTP method to 'PATCH'
+            // 3. Set the HTTP method to 'PATCH'
         req.setMethod('PATCH');
-        // 4. Create a JSON string with only the title
+            // 4. Create a JSON string with only the title
         String body = '{"title" : "Updated Title"}';
-        // 5. Set the request body
+            // 5. Set the request body
         req.setBody(body);
-        // 6. Send the request and get the response
-        HttpResponse res = Http.send(req);
-        // 7. Return the response body as string
-        System.debug(res.getStatusCode());
-        System.debug(res.getStatus());
-        System.debug(res.getBody());
-        return res.getBody();
+            // 6. Send the request and get the response
+        try {
+            HttpResponse res = Http.send(req);
+            if(res.getStatusCode() >= 200 && res.getStatusCode() < 300 ) {
+                response = res.getBody();
+            }
+            else {
+                response = 'Status code: ' + res.getStatusCode() + 'Status: ' + res.getStatus();
+            }
+        } 
+        catch (Exception ex) {
+            response = 'There was an error: ' + ex.getMessage();
+        }
+            // 7. Return the response body as string
+        return response;
     }
     
     /**
@@ -128,17 +143,18 @@ public class JSONPlaceholderExercise {
      * @return Integer - The HTTP status code from the response
      */
     public static Integer deletePost(Integer postId) {
-        // TODO: Student Implementation
-        // 1. Create a new HTTP request
+        Integer response;
+            // 1. Create a new HTTP request
         Http http = new Http();
         HttpRequest req = new HttpRequest();
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
+            // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
         req.setEndpoint(BASE_URL + '/posts/' + postId);
-        // 3. Set the HTTP method to 'DELETE'
+            // 3. Set the HTTP method to 'DELETE'
         req.setMethod('DELETE');
-        // 4. Send the request and get the response
+            // 4. Send the request and get the response
         HttpResponse res = http.send(req);
-        // 5. Return the response status code
-        return res.getStatusCode();
+            // 5. Return the response status code
+        response = res.getStatusCode();
+        return response;
     }
 } 

@@ -1,1 +1,1 @@
-JSONPlaceholderExercise.getPostById(1);
+JSONPlaceholderExercise.createPost('foo', 'bar', 1)

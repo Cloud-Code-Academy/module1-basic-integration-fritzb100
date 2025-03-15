@@ -130,10 +130,15 @@ public class JSONPlaceholderExercise {
     public static Integer deletePost(Integer postId) {
         // TODO: Student Implementation
         // 1. Create a new HTTP request
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
         // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
+        req.setEndpoint(BASE_URL + '/posts/' + postId);
         // 3. Set the HTTP method to 'DELETE'
+        req.setMethod('DELETE');
         // 4. Send the request and get the response
+        HttpResponse res = http.send(req);
         // 5. Return the response status code
-        return null;
+        return res.getStatusCode();
     }
 } 

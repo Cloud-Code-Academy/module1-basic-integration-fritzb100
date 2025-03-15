@@ -38,9 +38,7 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String createPost(String title, String body, Integer userId) {
-        // TODO: Student Implementation
         // 1. Create a new HTTP request
-        Http http = new Http();
         HttpRequest req = new HttpRequest();
         // 2. Set the endpoint URL using BASE_URL + '/posts'
         req.setEndpoint(BASE_URL + '/posts');
@@ -51,6 +49,7 @@ public class JSONPlaceholderExercise {
         // 5. Set the request body
         req.setBody(postData);
         // 6. Send the request and get the response
+        Http http = new Http();
         HttpResponse res = Http.send(req);
         // 7. Return the response body as string
         return res.getBody();
@@ -66,15 +65,31 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String updatePost(Integer postId, String title, String body, Integer userId) {
-        // TODO: Student Implementation
+        System.debug('postId: ' + postId); 
+        System.debug('title: ' + title);
+        System.debug('body: ' + body);
+        System.debug('userId: ' + userId);
+
         // 1. Create a new HTTP request
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
         // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
+        req.setEndpoint(BASE_URL + '/posts/' + postId);
+        System.debug(BASE_URL + '/posts/' + postId);
         // 3. Set the HTTP method to 'PUT'
+        req.setMethod('PUT');
+        req.setHeader('Content-Type', 'application/json');
         // 4. Create a JSON string with the updated post data
+        String jsonString = '{"id" : 1,"title" : "Updated Post", "body" : "This is an updated post","userId" : 1}';
         // 5. Set the request body
+        req.setBody(jsonString);
         // 6. Send the request and get the response
+        HttpResponse res = Http.send(req);
         // 7. Return the response body as string
-        return null;
+        System.debug(res.getStatus());
+        System.debug(res.getStatusCode());
+        System.debug(res.getBody());
+        return req.getBody();
     }
     
     /**

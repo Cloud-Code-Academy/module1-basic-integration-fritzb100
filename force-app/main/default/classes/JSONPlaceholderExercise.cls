@@ -40,7 +40,7 @@ public class JSONPlaceholderExercise {
         HttpRequest req = new HttpRequest();                                // 1. Create a new HTTP request        
         req.setEndpoint(BASE_URL + '/posts');                              // 2. Set the endpoint URL using BASE_URL + '/posts'
         req.setMethod('POST');                                            // 3. Set the HTTP method to 'POST'      
-        body =  '{"userId": 1, "id": 101, "title": "New Post", "body": "This is a new post"}';   // 4. Create a JSON string with the post data
+        body =  '{"userId": "' + userId + '",  "title": "' + title + '", "body": "' + body + '"}';   // 4. Create a JSON string with the post data
         req.setBody(body);      
         Http http = new Http();
         HttpResponse res = Http.send(req);                           // 6. Send the request and get the response        
@@ -63,7 +63,7 @@ public class JSONPlaceholderExercise {
         req.setEndpoint(BASE_URL + '/posts/' + postId);// 2. Set the endpoint URL using BASE_URL + '/posts/' + postId           
         req.setMethod('PUT'); // 3. Set the HTTP method to 'PUT'
         req.setHeader('Content-Type', 'application/json');  
-        String jsonString = '{"id" : 1,"title" : "Updated Post", "body" : "This is an updated post","userId" : 1}';// 4. Create a JSON string with the updated post data
+        String jsonString = '{"id" : 1,"title" : " ' + title + ' ", "body" : "' + body + '","userId" : ' + userId + '}';// 4. Create a JSON string with the updated post data
         req.setBody(jsonString);            // 5. Set the request body
         try {            // 6. Send the request and get the response
             HttpResponse res = Http.send(req);
@@ -89,13 +89,13 @@ public class JSONPlaceholderExercise {
      */
     public static String patchPostTitle(Integer postId, String title) {
         String response;            
-        Http http = new Http();// 1. Create a new HTTP request
+        Http http = new Http();     // 1. Create a new HTTP request
         HttpRequest req = new HttpRequest();            
-        req.setEndpoint(BASE_URL + '/posts/' + postId);// 2. Set the endpoint URL using BASE_URL + '/posts/' + postId            
-        req.setMethod('PATCH');// 3. Set the HTTP method to 'PATCH'            
-        String body = '{"title" : "Updated Title"}';// 4. Create a JSON string with only the title            
-        req.setBody(body);// 5. Set the request body            
-        try {  // 6. Send the request and get the response
+        req.setEndpoint(BASE_URL + '/posts/' + postId);     // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId            
+        req.setMethod('PATCH');     // 3. Set the HTTP method to 'PATCH'            
+        String body = '{"title" : "' + title + '"}';        // 4. Create a JSON string with only the title            
+        req.setBody(body);      // 5. Set the request body            
+        try {                   // 6. Send the request and get the response
             HttpResponse res = Http.send(req);
             if(res.getStatusCode() >= 200 && res.getStatusCode() < 300 ) {
                 response = res.getBody();
@@ -119,12 +119,12 @@ public class JSONPlaceholderExercise {
      */
     public static Integer deletePost(Integer postId) {
         Integer response;            
-        Http http = new Http();// 1. Create a new HTTP request
+        Http http = new Http(); // 1. Create a new HTTP request
         HttpRequest req = new HttpRequest();            
-        req.setEndpoint(BASE_URL + '/posts/' + postId);// 2. Set the endpoint URL using BASE_URL + '/posts/' + postId            
-        req.setMethod('DELETE');// 3. Set the HTTP method to 'DELETE'            
-        HttpResponse res = http.send(req);// 4. Send the request and get the response            
-        response = res.getStatusCode();// 5. Return the response status code
+        req.setEndpoint(BASE_URL + '/posts/' + postId); // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId            
+        req.setMethod('DELETE'); // 3. Set the HTTP method to 'DELETE'            
+        HttpResponse res = http.send(req); // 4. Send the request and get the response            
+        response = res.getStatusCode(); // 5. Return the response status code
         return response;
     }
 } 

@@ -39,9 +39,14 @@ public class JSONPlaceholderExercise {
     public static String createPost(String title, String body, Integer userId) {        
         HttpRequest req = new HttpRequest();                                // 1. Create a new HTTP request        
         req.setEndpoint(BASE_URL + '/posts');                              // 2. Set the endpoint URL using BASE_URL + '/posts'
-        req.setMethod('POST');                                            // 3. Set the HTTP method to 'POST'      
-        body =  '{"userId": "' + userId + '",  "title": "' + title + '", "body": "' + body + '"}';   // 4. Create a JSON string with the post data
-        req.setBody(body);      
+        req.setMethod('POST');                                             // 3. Set the HTTP method to 'POST'
+        Map<String, Object> jsonMap = new Map<String, Object>{
+            'userId' => userId,
+            'title' => title,
+            'body' => body
+            };
+        String jsonMapString = JSON.serialize(jsonMap);
+        req.setBody(jsonMapString);      
         Http http = new Http();
         HttpResponse res = Http.send(req);                           // 6. Send the request and get the response        
         return res.getBody();                                       // 7. Return the response body as string
@@ -62,9 +67,16 @@ public class JSONPlaceholderExercise {
         HttpRequest req = new HttpRequest();           
         req.setEndpoint(BASE_URL + '/posts/' + postId);// 2. Set the endpoint URL using BASE_URL + '/posts/' + postId           
         req.setMethod('PUT'); // 3. Set the HTTP method to 'PUT'
-        req.setHeader('Content-Type', 'application/json');  
-        String jsonString = '{"id" : 1,"title" : " ' + title + ' ", "body" : "' + body + '","userId" : ' + userId + '}';// 4. Create a JSON string with the updated post data
-        req.setBody(jsonString);            // 5. Set the request body
+        req.setHeader('Content-Type', 'application/json'); 
+        Map<String, Object> jsonMap = new Map<String, Object>{
+            'id' => postId,
+            'title' => title,
+            'body' => body,
+            'userId' => userId
+            };
+        String jsonMapString = JSON.serialize(jsonMap);
+        //String jsonString = '{"id" : 1,"title" : " ' + title + ' ", "body" : "' + body + '","userId" : ' + userId + '}';// 4. Create a JSON string with the updated post data
+        req.setBody(jsonMapString);            // 5. Set the request body
         try {            // 6. Send the request and get the response
             HttpResponse res = Http.send(req);
             if(res.getStatusCode() >= 200 && res.getStatusCode() <300) {
